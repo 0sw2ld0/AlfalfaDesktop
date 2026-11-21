@@ -11,6 +11,21 @@ already installed, identified by its absolute path. If it is missing, point the 
 `SHA256SUMS`. The executables are named `alfalfa-desktop-macos-arm64` and `alfalfa-desktop-macos-x64`.
 Prefer the path the user provides when there is more than one installation.
 
+## Build from a local checkout
+
+If the user asks to build locally, run these commands from the root of their AlfalfaDesktop checkout.
+Swift Package Manager builds for the current Mac by default.
+
+```sh
+swift build -c release
+desktop="$(swift build -c release --show-bin-path)/alfalfa-desktop"
+printf '%s\n' "$desktop"
+"$desktop" --version
+```
+
+Use the printed binary location for subsequent commands. A fresh build can have a different signing identity
+from the published executable. Check `permissions` again if macOS treats it as a different app or launcher.
+
 ## Inspect and act
 
 1. Run `"$desktop" --version`, `"$desktop" permissions`, and `"$desktop" list`, where `desktop` is the

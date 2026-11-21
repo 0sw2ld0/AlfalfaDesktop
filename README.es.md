@@ -53,6 +53,18 @@ La CLI admite clics, desplazamientos, arrastres, movimiento del cursor, texto, t
 accesibilidad, selección de menús y cambios explícitos de foco. La CLI y PACAI aplican las mismas restricciones por
 app y vuelven a comprobar la ventana después de la aprobación.
 
+Para compilar un ejecutable optimizado desde un clon local de AlfalfaDesktop, ejecuta lo siguiente en
+la raíz del repositorio. SwiftPM compila para el Mac que estás usando.
+
+```sh
+swift build -c release
+desktop="$(swift build -c release --show-bin-path)/alfalfa-desktop"
+printf '%s\n' "$desktop"
+"$desktop" --version
+```
+
+Dale la ruta absoluta resultante al agente de VS Code para que use esa compilación.
+
 ## Usar la CLI desde un agente de VS Code
 
 1. Descarga y verifica el ejecutable para tu Mac. En la terminal de VS Code, indica su ruta completa y
