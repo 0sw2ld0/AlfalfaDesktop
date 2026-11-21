@@ -75,7 +75,7 @@ argumentos. El cliente responde mediante `approval_result.reply_to` y puede apro
 
 Una interrupción válida cancela la aprobación pendiente y cierra la ejecución. Las operaciones nativas también
 son síncronas una vez aprobadas. El resultado llega en un bloque estructurado de `tool_end`, seguido de
-`run_finished`. Al desconectar, se descartan las aprobaciones pendientes. La versión 0.1.0 ofrece el transporte
+`run_finished`. Al desconectar, se descartan las aprobaciones pendientes. El adaptador actual ofrece transporte
 local por stdio. El adaptador MCP, el transporte en red y la reanudación de sesiones quedan fuera de esta versión.
 
 ## Prueba con una app real

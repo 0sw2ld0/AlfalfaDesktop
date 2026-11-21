@@ -1,7 +1,7 @@
 import Foundation
 
 enum DesktopRelease {
-    static let version = "0.1.0"
+    static let version = "0.1.1"
 }
 
 @main enum EntryPoint {
