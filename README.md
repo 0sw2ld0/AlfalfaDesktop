@@ -78,6 +78,9 @@ CLI and PACAI calls. A target window is checked again after approval.
    > tree. Ask me before running `action --pid=PID --window=0 --kind=click --x=X --y=Y --approve`. Leave
    > VS Code in front and stop after the click.
 
+VS Code can also load the [`alfalfadesktop-cli` workspace skill](.github/skills/alfalfadesktop-cli/SKILL.md).
+In a local Copilot chat, use `/alfalfadesktop-cli` followed by the name of the app and what you want to verify.
+
 The local agent invokes the executable through its terminal tool. Use `--approve` on the specific inspection or
 action you reviewed. See [VS Code agent tools](https://code.visualstudio.com/docs/agents/run/tools).
 
