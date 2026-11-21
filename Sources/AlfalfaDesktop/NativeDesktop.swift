@@ -712,50 +712,60 @@ final class PointerView: NSView {
     var pulse: CGFloat = 0
     let tip = CGPoint(x: 14, y: 46)
 
+    private static let leafScale: CGFloat = 18.0 / 28.0
+
+    private func leafPoint(_ x: CGFloat, _ y: CGFloat) -> NSPoint {
+        NSPoint(x: tip.x + x * Self.leafScale, y: tip.y + y * Self.leafScale)
+    }
+
+    var leafPath: NSBezierPath {
+        let leaf = NSBezierPath()
+        leaf.move(to: tip)
+        leaf.curve(to: leafPoint(16, -11), controlPoint1: leafPoint(10, -1), controlPoint2: leafPoint(15, -4))
+        leaf.curve(to: leafPoint(27, -8), controlPoint1: leafPoint(19, -7), controlPoint2: leafPoint(23, -7))
+        leaf.curve(to: leafPoint(18, -21), controlPoint1: leafPoint(27, -15), controlPoint2: leafPoint(23, -20))
+        leaf.line(to: leafPoint(23, -25))
+        leaf.curve(to: leafPoint(20, -28), controlPoint1: leafPoint(23, -27), controlPoint2: leafPoint(22, -28))
+        leaf.line(to: leafPoint(14, -22))
+        leaf.curve(to: leafPoint(2, -24), controlPoint1: leafPoint(11, -25), controlPoint2: leafPoint(6, -25))
+        leaf.curve(to: leafPoint(6, -13), controlPoint1: leafPoint(2, -19), controlPoint2: leafPoint(3, -15))
+        leaf.curve(to: tip, controlPoint1: leafPoint(2, -10), controlPoint2: leafPoint(0, -4))
+        leaf.close()
+
+        return leaf
+    }
+
     override func draw(_ dirtyRect: NSRect) {
         let green = NSColor(calibratedRed: 0.36, green: 0.72, blue: 0.29, alpha: 1)
         if pulse > 0 {
-            let radius = 6 + 14 * pulse
+            let radius = 4 + 10 * pulse
             let bounds = NSRect(x: tip.x - radius, y: tip.y - radius, width: radius * 2, height: radius * 2)
             let ring = NSBezierPath(ovalIn: bounds)
-            green.withAlphaComponent(0.55 * (1 - pulse)).setStroke()
-            ring.lineWidth = 3
+            green.withAlphaComponent(0.42 * (1 - pulse)).setStroke()
+            ring.lineWidth = 1.25
             ring.stroke()
         }
-        func p(_ x: CGFloat, _ y: CGFloat) -> NSPoint { NSPoint(x: tip.x + x, y: tip.y + y) }
-        let leaf = NSBezierPath()
-        leaf.move(to: tip)
-        leaf.curve(to: p(16, -11), controlPoint1: p(10, -1), controlPoint2: p(15, -4))
-        leaf.curve(to: p(27, -8), controlPoint1: p(19, -7), controlPoint2: p(23, -7))
-        leaf.curve(to: p(18, -21), controlPoint1: p(27, -15), controlPoint2: p(23, -20))
-        leaf.line(to: p(23, -25))
-        leaf.curve(to: p(20, -28), controlPoint1: p(23, -27), controlPoint2: p(22, -29))
-        leaf.line(to: p(14, -22))
-        leaf.curve(to: p(2, -24), controlPoint1: p(11, -25), controlPoint2: p(6, -25))
-        leaf.curve(to: p(6, -13), controlPoint1: p(2, -19), controlPoint2: p(3, -15))
-        leaf.curve(to: tip, controlPoint1: p(2, -10), controlPoint2: p(0, -4))
-        leaf.close()
-
+        let leaf = leafPath
         NSColor.black.withAlphaComponent(0.62).setStroke()
-        leaf.lineWidth = 3.5
+        leaf.lineWidth = 2.25
         leaf.lineJoinStyle = .round
         leaf.stroke()
         green.setFill()
         leaf.fill()
         NSColor.white.setStroke()
-        leaf.lineWidth = 1.5
+        leaf.lineWidth = 1
         leaf.stroke()
 
         let veins = NSBezierPath()
-        veins.move(to: p(19, -24))
-        veins.curve(to: p(4, -5), controlPoint1: p(15, -18), controlPoint2: p(10, -13))
-        veins.move(to: p(14, -18))
-        veins.curve(to: p(23, -12), controlPoint1: p(17, -18), controlPoint2: p(21, -14))
-        veins.move(to: p(12, -15))
-        veins.curve(to: p(6, -20), controlPoint1: p(10, -17), controlPoint2: p(8, -19))
+        veins.move(to: leafPoint(19, -24))
+        veins.curve(to: leafPoint(4, -5), controlPoint1: leafPoint(15, -18), controlPoint2: leafPoint(10, -13))
+        veins.move(to: leafPoint(14, -18))
+        veins.curve(to: leafPoint(23, -12), controlPoint1: leafPoint(17, -18), controlPoint2: leafPoint(21, -14))
+        veins.move(to: leafPoint(12, -15))
+        veins.curve(to: leafPoint(6, -20), controlPoint1: leafPoint(10, -17), controlPoint2: leafPoint(8, -19))
         NSColor.white.withAlphaComponent(0.78).setStroke()
         veins.lineCapStyle = .round
-        veins.lineWidth = 1.2
+        veins.lineWidth = 0.8
         veins.stroke()
     }
 }
