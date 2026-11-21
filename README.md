@@ -1,6 +1,6 @@
-# CuyDesktop
+# AlfalfaDesktop
 
-CuyDesktop is a planned native macOS app-control tool for inspecting windows and performing approved actions while the user works in another app.
+AlfalfaDesktop is a planned native macOS app-control tool for inspecting windows and performing approved actions while the user works in another app.
 
 This repository defines the extraction plan. The current implementation lives in AlfalfaCode.
 
@@ -22,7 +22,7 @@ Each protocol mode owns its own input and output stream. Both adapters and the C
 3. Test with a real app fixture. Verify a window capture and a background action while a separate app retains foreground focus.
 4. Integrate a pinned build into AlfalfaCode, using CuyBrowser's version and checksum verification as a reference.
 
-The AlfalfaCode sidebar preview stays in the AlfalfaCode client. CuyDesktop should provide the window observations and action results the preview needs.
+The AlfalfaCode sidebar preview stays in the AlfalfaCode client. AlfalfaDesktop should provide the window observations and action results the preview needs.
 
 ## References
 

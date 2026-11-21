@@ -1,4 +1,4 @@
-# Working on CuyDesktop
+# Working on AlfalfaDesktop
 
 - Write Swift identifiers, comments, public API documentation, and tests in US English.
 - Follow the [RedMadRobot Swift Style Guide](https://github.com/RedMadRobot/RMR-swift-style-guide). Use descriptive names, Swift casing conventions, and a 120-character line guide.
