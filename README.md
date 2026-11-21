@@ -52,6 +52,18 @@ Supported actions include clicks, scrolling, drag, hover, text and key input, se
 selection, and explicit focus. Use only the target app's documented capabilities. App restrictions apply before both
 CLI and PACAI calls. A target window is checked again after approval.
 
+To build an optimized executable from a local AlfalfaDesktop checkout, run the following from the
+repository root. SwiftPM builds for the current Mac.
+
+```sh
+swift build -c release
+desktop="$(swift build -c release --show-bin-path)/alfalfa-desktop"
+printf '%s\n' "$desktop"
+"$desktop" --version
+```
+
+Give the resulting absolute path to your VS Code agent if you want it to use that build.
+
 ## Use the CLI from a VS Code agent
 
 1. Download and verify the executable for your Mac. In the VS Code terminal, point to it with its full path
