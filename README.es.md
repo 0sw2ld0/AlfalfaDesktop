@@ -81,6 +81,9 @@ app y vuelven a comprobar la ventana después de la aprobación.
    > `action --pid=PID --window=0 --kind=click --x=X --y=Y --approve`. Deja VS Code en primer plano y
    > termina después del clic.
 
+VS Code también puede cargar el [skill `alfalfadesktop-cli` del proyecto](.github/skills/alfalfadesktop-cli/SKILL.md).
+En un chat local de Copilot, escribe `/alfalfadesktop-cli` seguido de la app y lo que quieres comprobar.
+
 El agente local invoca el ejecutable mediante su herramienta de terminal. Usa `--approve` para la inspección o
 acción concreta que revisaste. Consulta las [herramientas para agentes de VS Code](https://code.visualstudio.com/docs/agents/run/tools).
 
