@@ -52,6 +52,35 @@ Supported actions include clicks, scrolling, drag, hover, text and key input, se
 selection, and explicit focus. Use only the target app's documented capabilities. App restrictions apply before both
 CLI and PACAI calls. A target window is checked again after approval.
 
+## Use the CLI from a VS Code agent
+
+1. Download and verify the executable for your Mac. In the VS Code terminal, point to it with its full path
+   and run the following commands from a local macOS workspace:
+
+   ```sh
+   desktop="$HOME/Downloads/alfalfa-desktop-macos-arm64" # Use alfalfa-desktop-macos-x64 on Intel.
+   chmod +x "$desktop"
+   "$desktop" --version
+   "$desktop" permissions
+   "$desktop" list
+   ```
+
+2. Open a new, empty TextEdit document and leave VS Code in front. If Accessibility is missing, run
+   `"$desktop" permissions --request --approve` yourself and grant it to the responsible app shown by macOS.
+   Screen Recording is needed only when you request window images with `inspect --capture`.
+
+3. Start a local agent chat with terminal access and give it this prompt. Replace the path with the one you
+   verified. Review each terminal command when VS Code asks for approval.
+
+   > Use `/absolute/path/to/alfalfa-desktop-macos-arm64` to check my empty TextEdit document. Run `list` to
+   > find TextEdit's PID. Ask me before running `inspect --pid=PID --window=0 --approve` and report the title. If the
+   > inspection finds the blank test document, choose a point inside its editing area from the accessibility
+   > tree. Ask me before running `action --pid=PID --window=0 --kind=click --x=X --y=Y --approve`. Leave
+   > VS Code in front and stop after the click.
+
+The local agent invokes the executable through its terminal tool. Use `--approve` on the specific inspection or
+action you reviewed. See [VS Code agent tools](https://code.visualstudio.com/docs/agents/run/tools).
+
 ## PACAI over stdio
 
 Run `alfalfa-desktop pacai` and exchange PACAI 0.3 JSONL records over its input and output streams. Send a client

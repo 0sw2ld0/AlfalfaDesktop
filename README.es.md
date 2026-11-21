@@ -53,6 +53,37 @@ La CLI admite clics, desplazamientos, arrastres, movimiento del cursor, texto, t
 accesibilidad, selección de menús y cambios explícitos de foco. La CLI y PACAI aplican las mismas restricciones por
 app y vuelven a comprobar la ventana después de la aprobación.
 
+## Usar la CLI desde un agente de VS Code
+
+1. Descarga y verifica el ejecutable para tu Mac. En la terminal de VS Code, indica su ruta completa y
+   ejecuta estos comandos desde un espacio de trabajo local en macOS:
+
+   ```sh
+   desktop="$HOME/Downloads/alfalfa-desktop-macos-arm64" # Usa alfalfa-desktop-macos-x64 en Intel.
+   chmod +x "$desktop"
+   "$desktop" --version
+   "$desktop" permissions
+   "$desktop" list
+   ```
+
+2. Abre un documento vacío nuevo en TextEdit y deja VS Code en primer plano. Si falta Accesibilidad,
+   ejecuta tú `"$desktop" permissions --request --approve` y concede el permiso a la app responsable que
+   indica macOS. Grabación de pantalla se necesita para obtener imágenes con `inspect --capture`.
+
+3. Abre un chat de agente local con acceso a la terminal y dale este encargo. Sustituye la ruta por la que
+   verificaste. Revisa cada comando cuando VS Code te pida aprobarlo.
+
+   > Usa `/ruta/absoluta/alfalfa-desktop-macos-arm64` para comprobar mi documento vacío de TextEdit.
+   > Ejecuta `list` para localizar el PID de TextEdit. Pregúntame antes de ejecutar
+   > `inspect --pid=PID --window=0 --approve` y dime
+   > el título. Si encuentras el documento de prueba vacío, elige un punto dentro del área de edición a
+   > partir del árbol de accesibilidad. Pregúntame antes de ejecutar
+   > `action --pid=PID --window=0 --kind=click --x=X --y=Y --approve`. Deja VS Code en primer plano y
+   > termina después del clic.
+
+El agente local invoca el ejecutable mediante su herramienta de terminal. Usa `--approve` para la inspección o
+acción concreta que revisaste. Consulta las [herramientas para agentes de VS Code](https://code.visualstudio.com/docs/agents/run/tools).
+
 ## PACAI sobre stdio
 
 Ejecuta `alfalfa-desktop pacai` para intercambiar mensajes PACAI 0.3 en formato JSONL. El cliente comienza enviando
