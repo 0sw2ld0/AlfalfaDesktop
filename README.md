@@ -1,32 +1,78 @@
 # AlfalfaDesktop
 
-AlfalfaDesktop is a planned native macOS app-control tool for inspecting windows and performing approved actions while the user works in another app.
+AlfalfaDesktop extracts AlfalfaCode's native macOS desktop controller into a Swift package. It lists running apps, inspects
+their accessibility trees, and performs explicitly approved actions. Background input uses a virtual pointer and targets
+the selected application.
 
-This repository defines the extraction plan. The current implementation lives in AlfalfaCode.
+## Build and use the CLI
 
-## Design
+Build with Swift 5.10 or later on macOS 14 or later.
 
-| Component | Responsibility |
-| --- | --- |
-| Swift core | Find apps and windows, read accessibility trees, capture approved windows, and perform scoped actions with a virtual pointer. |
-| PACAI adapter | Expose execution, approval, and cancellation events to PACAI clients over stdio using the PACAI JSONL framing. |
-| MCP adapter | Expose the same desktop capabilities to MCP hosts through MCP JSON-RPC over stdio. |
-| CLI | Run a single operation or select a protocol adapter from the terminal. |
+```sh
+swift build
+swift test
 
-Each protocol mode owns its own input and output stream. Both adapters and the CLI use the same capability checks and per-app authorization.
+desktop=.build/debug/alfalfa-desktop
+"$desktop" list
+"$desktop" permissions
+"$desktop" inspect --pid=12345 --window=0 --approve
+"$desktop" action --pid=12345 --window=0 --kind=click --path=1 --role=AXButton --approve
+```
 
-## First milestone
+Use the PID from `list` and the element path and role from `inspect`. The window index defaults to `0`.
+`inspect --capture --approve` adds a capture path when macOS permits it. Capture files are stored in a private temporary
+directory and should be removed after use. `permissions --request --approve` asks macOS to request the required access.
+macOS grants Accessibility and Screen Recording separately to the responsible app. In production, use a signed host app
+for a stable permission identity. The CLI's `--approve` authorizes one invocation and cannot grant macOS permissions.
 
-1. Extract the Swift helper currently in `alfalfa/apps/ayudante.swift`.
-2. Validate the signed executable's Accessibility and Screen Recording permission flow on macOS.
-3. Test with a real app fixture. Verify a window capture and a background action while a separate app retains foreground focus.
-4. Integrate a pinned build into AlfalfaCode, using CuyBrowser's version and checksum verification as a reference.
+Supported actions include clicks, scrolling, drag, hover, text and key input, setting an accessibility value, menu
+selection, and explicit focus. Use only the target app's documented capabilities. App restrictions apply before both
+CLI and PACAI calls. A target window is checked again after approval.
 
-The AlfalfaCode sidebar preview stays in the AlfalfaCode client. AlfalfaDesktop should provide the window observations and action results the preview needs.
+## PACAI over stdio
+
+Run `alfalfa-desktop pacai` and exchange PACAI 0.3 JSONL records over its input and output streams. Send a client
+`hello` first. Each `input` has one structured command block with this data shape:
+
+```json
+{
+  "type": "structured",
+  "schema": "urn:alfalfadesktop:command:v1",
+  "data": {
+    "command": "inspect",
+    "options": { "pid": "12345", "window": "0", "capture": "true" }
+  }
+}
+```
+
+Use `list`, `inspect`, `action`, or `permissions` as the command. Option names are the CLI flags without the leading
+dashes. A sensitive command emits `approval_request` with a canonical digest and accepts only `once` approval via
+`approval_result.reply_to`. An eligible `interrupt` cancels a pending approval and closes the run. Native operations run
+synchronously once approved. Results are structured blocks in `tool_end` and end with `run_finished`. Disconnect
+discards pending approvals. This local adapter does not implement network transport, reattachment, or an MCP server.
+
+## Real macOS fixture
+
+`Tests/Fixtures/DesktopFixture.swift` opens a separate AppKit counter and records its focus during actions.
+`Scripts/test-desktop.mjs` can verify both the CLI and PACAI against it. The second mode in the example performs one
+approved click through each interface and checks that a denied or interrupted request does not change the count.
+
+```sh
+fixture_dir=$(mktemp -d)
+swiftc Tests/Fixtures/DesktopFixture.swift -o "$fixture_dir/AlfalfaDesktopFixture"
+touch "$fixture_dir/focus.jsonl"
+"$fixture_dir/AlfalfaDesktopFixture" "$fixture_dir/focus.jsonl" &
+fixture_pid=$!
+# Wait until the fixture window appears, then continue with another app in the foreground.
+node Scripts/test-desktop.mjs "$PWD/.build/debug/alfalfa-desktop" "$fixture_pid" "$fixture_dir/focus.jsonl"
+kill "$fixture_pid"
+```
+
+Add `--capture` to verify that the two real PNG captures differ when the counter changes. Use `--list-only` for real
+application discovery, PACAI handshake, and denial and cancellation without sending any native input.
 
 ## References
 
 - [AlfalfaCode](https://github.com/0sw2ld0/AlfalfaCode)
 - [PACAI](https://github.com/0sw2ld0/PACAI)
 - [CuyBrowser](https://github.com/0sw2ld0/cuybrowser)
-- [MCP transports](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports)
