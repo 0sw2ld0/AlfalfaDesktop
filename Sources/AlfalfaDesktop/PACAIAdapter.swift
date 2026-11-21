@@ -127,10 +127,11 @@ final class PACAIAdapter {
             }
             clientLimit = min(size, Self.maxRecordBytes)
         }
+        let implementation = ["name": "AlfalfaDesktop", "version": DesktopRelease.version]
         try send("hello", [
             "versions": ["0.3"], "profiles": [], "extensions": [],
             "limits": ["max_message_bytes": Self.maxRecordBytes],
-            "implementation": ["name": "AlfalfaDesktop"]
+            "implementation": implementation
         ])
         guard (payload["versions"] as? [String])?.contains("0.3") == true else {
             try sendError("version_incompatible", "This adapter supports PACAI 0.3.", reference: id)
@@ -138,7 +139,7 @@ final class PACAIAdapter {
             return
         }
         try send("session_started", [
-            "version": "0.3", "profiles": [], "extensions": [], "agent": ["name": "AlfalfaDesktop"]
+            "version": "0.3", "profiles": [], "extensions": [], "agent": implementation
         ], replyTo: id)
     }
 

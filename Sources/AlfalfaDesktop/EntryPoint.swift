@@ -1,12 +1,16 @@
 import Foundation
 
+enum DesktopRelease {
+    static let version = "0.1.0"
+}
+
 @main enum EntryPoint {
     static func main() {
         do {
             let arguments = Array(CommandLine.arguments.dropFirst())
             guard let command = arguments.first, !["help", "--help", "-h"].contains(command) else {
                 print("""
-                    Usage: alfalfa-desktop list | permissions [--request] | pacai
+                    Usage: alfalfa-desktop --version | list | permissions [--request] | pacai
                            alfalfa-desktop inspect --pid=PID [--window=0] [--capture] --approve
                            alfalfa-desktop action --pid=PID --kind=click --path=PATH --role=AXButton --approve
                     """)
@@ -14,6 +18,9 @@ import Foundation
             }
             let (options, approved) = try parse(Array(arguments.dropFirst()))
             switch command {
+            case "--version":
+                guard options.isEmpty, !approved else { throw DesktopError("--version takes no options.") }
+                print("AlfalfaDesktop \(DesktopRelease.version)")
             case "pacai", "--pacai":
                 guard options.isEmpty, !approved else { throw DesktopError("PACAI uses per-operation approvals.") }
                 try PACAIAdapter().run()

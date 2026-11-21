@@ -1,8 +1,30 @@
 # AlfalfaDesktop
 
+[Español](README.es.md)
+
 AlfalfaDesktop extracts AlfalfaCode's native macOS desktop controller into a Swift package. It lists running apps, inspects
 their accessibility trees, and performs explicitly approved actions. Background input uses a virtual pointer and targets
 the selected application.
+
+## Download
+
+AlfalfaDesktop requires macOS 14 or later. Choose the executable for your Mac and verify it against the checksum
+manifest before running it.
+
+| Mac | Download |
+| --- | --- |
+| Apple Silicon | [alfalfa-desktop-macos-arm64](https://github.com/0sw2ld0/AlfalfaDesktop/releases/latest/download/alfalfa-desktop-macos-arm64) |
+| Intel | [alfalfa-desktop-macos-x64](https://github.com/0sw2ld0/AlfalfaDesktop/releases/latest/download/alfalfa-desktop-macos-x64) |
+
+[SHA256SUMS](https://github.com/0sw2ld0/AlfalfaDesktop/releases/latest/download/SHA256SUMS)
+
+For example, after downloading the Apple Silicon binary and manifest from the same release:
+
+```sh
+grep '  alfalfa-desktop-macos-arm64$' SHA256SUMS | shasum -a 256 -c
+chmod +x alfalfa-desktop-macos-arm64
+./alfalfa-desktop-macos-arm64 --version
+```
 
 ## Build and use the CLI
 
@@ -13,6 +35,7 @@ swift build
 swift test
 
 desktop=.build/debug/alfalfa-desktop
+"$desktop" --version
 "$desktop" list
 "$desktop" permissions
 "$desktop" inspect --pid=12345 --window=0 --approve
@@ -54,8 +77,7 @@ discards pending approvals. This local adapter does not implement network transp
 ## Real macOS fixture
 
 `Tests/Fixtures/DesktopFixture.swift` opens a separate AppKit counter and records its focus during actions.
-`Scripts/test-desktop.mjs` can verify both the CLI and PACAI against it. The second mode in the example performs one
-approved click through each interface and checks that a denied or interrupted request does not change the count.
+`Scripts/test-desktop.mjs` can verify both the CLI and PACAI against it. The example performs one approved click through each interface and checks that a denied or interrupted request does not change the count.
 
 ```sh
 fixture_dir=$(mktemp -d)
