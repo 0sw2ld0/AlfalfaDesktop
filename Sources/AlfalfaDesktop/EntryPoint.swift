@@ -2,7 +2,7 @@ import Foundation
 
 enum DesktopRelease {
     static let displayName = "Alfalfa Computer Use"
-    static let version = "0.1.1"
+    static let version = "0.1.2"
 }
 
 @main enum EntryPoint {
