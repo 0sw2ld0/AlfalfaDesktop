@@ -140,6 +140,11 @@ son síncronas una vez aprobadas. El resultado llega en un bloque estructurado d
 `run_finished`. Al desconectar, se descartan las aprobaciones pendientes. El adaptador actual ofrece transporte
 local por stdio. El adaptador MCP, el transporte en red y la reanudación de sesiones quedan fuera de esta versión.
 
+## Clic reproducible sin grabación de pantalla
+
+Ejecuta la [prueba de clic en macOS](Examples/AccessibilityClick/README.es.md) desde AlfalfaCode o un agente de VS Code.
+El ejemplo incluye los resultados JSON de ambos.
+
 ## Prueba con una app real
 
 `Tests/Fixtures/DesktopFixture.swift` abre un contador AppKit y registra qué app conserva el foco. El script

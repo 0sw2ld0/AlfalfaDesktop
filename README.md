@@ -133,6 +133,11 @@ dashes. A sensitive command emits `approval_request` with a canonical digest and
 synchronously once approved. Results are structured blocks in `tool_end` and end with `run_finished`. Disconnect
 discards pending approvals. This local adapter does not implement network transport, reattachment, or an MCP server.
 
+## Reproducible click without Screen Recording
+
+Run the same [macOS click test](Examples/AccessibilityClick/README.md) from AlfalfaCode or a VS Code agent.
+The example includes the JSON results from both runs.
+
 ## Real macOS fixture
 
 `Tests/Fixtures/DesktopFixture.swift` opens a separate AppKit counter and records its focus during actions.
