@@ -1,9 +1,9 @@
 ---
 name: alfalfadesktop-cli
-description: Inspect and test a local macOS app from a VS Code agent using the AlfalfaDesktop CLI. Use for accessibility trees, window captures, and approved background actions while developing a desktop app.
+description: Inspect and test a local macOS app from a VS Code agent using the Alfalfa Computer Use CLI. Use for accessibility trees, window captures, and approved background actions while developing a desktop app.
 ---
 
-# AlfalfaDesktop CLI
+# Alfalfa Computer Use CLI
 
 Use the terminal tool in a local VS Code agent session on macOS 14 or later. Use the executable the user
 already installed, identified by its absolute path. If it is missing, point the user to the
@@ -13,7 +13,7 @@ Prefer the path the user provides when there is more than one installation.
 
 ## Build from a local checkout
 
-If the user asks to build locally, run these commands from the root of their AlfalfaDesktop checkout.
+If the user asks to build locally, run these commands from the root of their Alfalfa Computer Use checkout.
 Swift Package Manager builds for the current Mac by default.
 
 ```sh

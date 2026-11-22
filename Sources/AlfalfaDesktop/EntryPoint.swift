@@ -1,6 +1,7 @@
 import Foundation
 
 enum DesktopRelease {
+    static let displayName = "Alfalfa Computer Use"
     static let version = "0.1.1"
 }
 
@@ -10,6 +11,8 @@ enum DesktopRelease {
             let arguments = Array(CommandLine.arguments.dropFirst())
             guard let command = arguments.first, !["help", "--help", "-h"].contains(command) else {
                 print("""
+                    \(DesktopRelease.displayName)
+
                     Usage: alfalfa-desktop --version | list | permissions [--request] | pacai
                            alfalfa-desktop inspect --pid=PID [--window=0] [--capture] --approve
                            alfalfa-desktop action --pid=PID --kind=click --path=PATH --role=AXButton --approve

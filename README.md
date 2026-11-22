@@ -1,14 +1,16 @@
-# AlfalfaDesktop
+# Alfalfa Computer Use
 
 [Español](README.es.md)
 
-AlfalfaDesktop extracts AlfalfaCode's native macOS desktop controller into a Swift package. It lists running apps, inspects
+Alfalfa Computer Use extracts AlfalfaCode's native macOS desktop controller into a Swift package. It lists running apps, inspects
 their accessibility trees, and performs explicitly approved actions. Background input uses a virtual pointer and targets
 the selected application.
 
+The CLI command is `alfalfa-desktop`. AlfalfaCode uses the original `AlfalfaDesktop` prefix in `--version` when verifying the binary.
+
 ## Download
 
-AlfalfaDesktop requires macOS 14 or later. Choose the executable for your Mac and verify it against the checksum
+Alfalfa Computer Use requires macOS 14 or later. Choose the executable for your Mac and verify it against the checksum
 manifest before running it.
 
 | Mac | Download |
@@ -52,8 +54,7 @@ Supported actions include clicks, scrolling, drag, hover, text and key input, se
 selection, and explicit focus. Use only the target app's documented capabilities. App restrictions apply before both
 CLI and PACAI calls. A target window is checked again after approval.
 
-To build an optimized executable from a local AlfalfaDesktop checkout, run the following from the
-repository root. SwiftPM builds for the current Mac.
+To build an optimized executable, run the following from the repository root. SwiftPM builds for the current Mac.
 
 ```sh
 swift build -c release
@@ -66,7 +67,7 @@ Give the resulting absolute path to your VS Code agent if you want it to use tha
 
 ## Why browsers are read-only
 
-AlfalfaDesktop allows inspection of Chrome and other recognized browsers. This includes the accessibility tree
+Alfalfa Computer Use allows inspection of Chrome and other recognized browsers. This includes the accessibility tree
 and, with Screen Recording permission, a window capture. The same restriction applies through the CLI and PACAI.
 
 macOS Accessibility grants the responsible app access to UI elements and windows. It has no permission scope

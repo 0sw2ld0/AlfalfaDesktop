@@ -1,10 +1,12 @@
-# AlfalfaDesktop
+# Alfalfa Computer Use
 
 [English](README.md)
 
-AlfalfaDesktop es el controlador nativo de macOS extraído de AlfalfaCode y empaquetado en Swift. Enumera apps
+Alfalfa Computer Use es el controlador nativo de macOS extraído de AlfalfaCode y empaquetado en Swift. Enumera apps
 abiertas, lee sus árboles de accesibilidad y ejecuta acciones con aprobación explícita. El cursor virtual dirige
 las acciones en segundo plano a la aplicación elegida.
+
+El comando es `alfalfa-desktop`. AlfalfaCode usa el prefijo original `AlfalfaDesktop` de `--version` para verificar el binario.
 
 ## Descargas
 
@@ -53,8 +55,7 @@ La CLI admite clics, desplazamientos, arrastres, movimiento del cursor, texto, t
 accesibilidad, selección de menús y cambios explícitos de foco. La CLI y PACAI aplican las mismas restricciones por
 app y vuelven a comprobar la ventana después de la aprobación.
 
-Para compilar un ejecutable optimizado desde un clon local de AlfalfaDesktop, ejecuta lo siguiente en
-la raíz del repositorio. SwiftPM compila para el Mac que estás usando.
+Para compilar un ejecutable optimizado, ejecuta lo siguiente en la raíz del repositorio. SwiftPM compila para el Mac que estás usando.
 
 ```sh
 swift build -c release
@@ -67,7 +68,7 @@ Dale la ruta absoluta resultante al agente de VS Code para que use esa compilaci
 
 ## Por qué los navegadores están en solo lectura
 
-AlfalfaDesktop permite inspeccionar Chrome y otros navegadores reconocidos. Puede leer su árbol de
+Alfalfa Computer Use permite inspeccionar Chrome y otros navegadores reconocidos. Puede leer su árbol de
 accesibilidad y capturar la ventana si macOS concede permiso de grabación. La CLI y PACAI aplican
 la misma restricción.
 

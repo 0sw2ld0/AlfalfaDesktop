@@ -156,7 +156,7 @@ final class PACAIAdapter {
                 $0["schema"] as? String == Self.commandSchema }
             guard commands.count == 1, let data = commands.first?["data"] as? [String: Any],
                   let command = data["command"] as? String, let options = data["options"] as? [String: String] else {
-                throw DesktopError("Provide one structured AlfalfaDesktop command.")
+                throw DesktopError("Provide one structured \(DesktopRelease.displayName) command.")
             }
             request = try DesktopRequest(command: command, options: options)
             operation = try controller.prepare(request)
