@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0"><dict>
+<key>CFBundleDisplayName</key><string>Demo de control Alfalfa</string>
+<key>CFBundleIdentifier</key><string>dev.cuycoders.control-demo</string>
+<key>CFBundleExecutable</key><string>Demo</string>
+<key>CFBundlePackageType</key><string>APPL</string>
+</dict></plist>

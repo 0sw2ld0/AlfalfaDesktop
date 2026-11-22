@@ -1,0 +1,12 @@
+{
+  "runner": "vscode",
+  "test": "desktop",
+  "permissions": {
+    "accessibility": true,
+    "screenRecording": false
+  },
+  "captureRequested": false,
+  "before": "Pendiente",
+  "method": "AXPress",
+  "after": "Control confirmado"
+}
