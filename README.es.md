@@ -65,6 +65,22 @@ printf '%s\n' "$desktop"
 
 Dale la ruta absoluta resultante al agente de VS Code para que use esa compilación.
 
+## Por qué los navegadores están en solo lectura
+
+AlfalfaDesktop permite inspeccionar Chrome y otros navegadores reconocidos. Puede leer su árbol de
+accesibilidad y capturar la ventana si macOS concede permiso de grabación. La CLI y PACAI aplican
+la misma restricción.
+
+Accesibilidad de macOS concede a la app responsable acceso a elementos y ventanas. Ese permiso carece
+de alcance por pestaña u origen web. Si una herramienta lee `http://localhost:3000` y luego envía un
+clic de escritorio, Chrome puede cambiar de pestaña o seguir una redirección entre ambos pasos. El
+evento seguiría dirigido a la ventana aunque hubiera cambiado el documento autorizado.
+
+Para probar webs locales en AlfalfaCode, **Chrome local** delega las acciones a AlfalfaBrowser en su
+propia sesión de Chrome. AlfalfaBrowser pide aprobación para la pestaña y el origen exacto, incluido
+el puerto. Comprueba el origen en el documento de destino antes de actuar y revoca el permiso cuando
+la pestaña sale de ese origen. [AlfalfaBrowser](https://github.com/0sw2ld0/AlfalfaBrowser)
+
 ## Usar la CLI desde un agente de VS Code
 
 1. Descarga y verifica el ejecutable para tu Mac. En la terminal de VS Code, indica su ruta completa y
@@ -148,4 +164,4 @@ el descubrimiento de apps, la negociación PACAI, la denegación y la cancelaci�
 
 - [AlfalfaCode](https://github.com/0sw2ld0/AlfalfaCode)
 - [PACAI](https://github.com/0sw2ld0/PACAI)
-- [CuyBrowser](https://github.com/0sw2ld0/cuybrowser)
+- [AlfalfaBrowser](https://github.com/0sw2ld0/AlfalfaBrowser)

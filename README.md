@@ -64,6 +64,21 @@ printf '%s\n' "$desktop"
 
 Give the resulting absolute path to your VS Code agent if you want it to use that build.
 
+## Why browsers are read-only
+
+AlfalfaDesktop allows inspection of Chrome and other recognized browsers. This includes the accessibility tree
+and, with Screen Recording permission, a window capture. The same restriction applies through the CLI and PACAI.
+
+macOS Accessibility grants the responsible app access to UI elements and windows. It has no permission scope
+for a specific browser tab or web origin. If a tool reads `http://localhost:3000` and then sends a desktop
+click, Chrome could switch tabs or follow a redirect between those steps. The event would still target the
+window, even though the authorized document might have changed.
+
+For local web testing in AlfalfaCode, **Chrome local** delegates actions to AlfalfaBrowser in its managed
+Chrome session. AlfalfaBrowser requests approval for the tab and exact origin, including the port. It checks
+the origin in the target document before acting and revokes approval when the tab leaves that origin.
+[AlfalfaBrowser](https://github.com/0sw2ld0/AlfalfaBrowser)
+
 ## Use the CLI from a VS Code agent
 
 1. Download and verify the executable for your Mac. In the VS Code terminal, point to it with its full path
@@ -141,4 +156,4 @@ application discovery, PACAI handshake, and denial and cancellation without send
 
 - [AlfalfaCode](https://github.com/0sw2ld0/AlfalfaCode)
 - [PACAI](https://github.com/0sw2ld0/PACAI)
-- [CuyBrowser](https://github.com/0sw2ld0/cuybrowser)
+- [AlfalfaBrowser](https://github.com/0sw2ld0/AlfalfaBrowser)
