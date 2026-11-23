@@ -28,6 +28,54 @@ chmod +x alfalfa-desktop-macos-arm64
 ./alfalfa-desktop-macos-arm64 --version
 ```
 
+## Install from source
+
+You need macOS 14 or later and the Xcode command line tools with Swift 5.10 or later. Check with
+`swift --version`. If they are missing, `xcode-select --install` installs them and asks for an administrator password.
+None of the following steps use `sudo`: the build stays in the checkout, and the link goes in your home folder.
+
+```sh
+git clone https://github.com/0sw2ld0/AlfalfaDesktop.git
+cd AlfalfaDesktop
+swift build -c release
+swift test
+mkdir -p ~/.local/bin
+ln -sf "$(swift build -c release --show-bin-path)/alfalfa-desktop" ~/.local/bin/alfalfa-desktop
+~/.local/bin/alfalfa-desktop --version
+```
+
+The link points at the build folder, so a new build replaces the command. To update:
+
+```sh
+git pull --ff-only
+swift build -c release
+```
+
+### macOS permissions
+
+Run `alfalfa-desktop permissions --request --approve` from the app that will launch the command, such as VS Code or
+Terminal. macOS grants the permissions to that app, not to `alfalfa-desktop`. Any command that app runs can then
+control other apps, so you can grant them to Terminal only, or turn them off when you finish.
+
+| Command | No permissions | Accessibility | Accessibility and Screen Recording |
+| --- | --- | --- | --- |
+| `permissions`, `list` | Yes | Yes | Yes |
+| `inspect`, `action` | No | Yes | Yes |
+| `inspect --capture` | No | No image | Yes |
+
+To turn on either permission in System Settings > Privacy & Security, macOS asks for an administrator's credentials.
+On an administrator account your own password or Touch ID is enough. On a standard account an administrator has to
+approve it. On a Mac managed by an organization, the switch may be locked and set by a configuration profile.
+
+A local build has a different signature from the published executable. If macOS does not recognize it, run
+`permissions` again.
+
+### Use the skill in another project
+
+The [`alfalfadesktop-cli` skill](.github/skills/alfalfadesktop-cli/SKILL.md) loads when this repository is the open
+workspace. To use it in another project, copy the `.github/skills/alfalfadesktop-cli` folder to the same path in that
+project, or to `.claude/skills/alfalfadesktop-cli` for Claude Code.
+
 ## Build and use the CLI
 
 Build with Swift 5.10 or later on macOS 14 or later.
